@@ -5,24 +5,91 @@
     android:orientation="vertical" >
 
 
-    <EditText
-        android:id="@+id/email_address"
-        android:layout_width="fill_parent"
+    <RadioGroup
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress" />
+        android:orientation="horizontal"
+        android:translationY="500dp">
 
-    <TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        <RadioButton
+            android:id="@+id/scytale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
+            android:text="Scytale" />
 
+        <RadioButton
+            android:id="@+id/vigenere"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
+            android:text="Vigenere"
+            android:translationX="80dp"/>
+
+        <RadioButton
+            android:id="@+id/caesar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked"
+            android:text="Caesar"
+            android:translationX="150dp"/>
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/encrypted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Encrypted: " />
+
+    <TextView
+        android:id="@+id/decrypted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Decrypted: " />
+
+    <Button
+        android:id="@+id/encrypt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Encrypt"
+        android:translationY="500dp"/>
+
+    <Button
+        android:id="@+id/decrypt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Decrypt"
+        android:translationY="500dp"/>
 
     <EditText
-        android:id="@+id/number"
-        android:layout_width="fill_parent"
+        android:id="@+id/message"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number" />
-</TableRow>
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Enter Message Here: "/>
 
+    <EditText
+        android:id="@+id/key"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Enter Key Here if Vigenre: "/>
 
+    <EditText
+        android:id="@+id/shift"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Enter Shift Here if Caesar: "/>
+
+    <EditText
+        android:id="@+id/scytaleRows"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Enter The Number of Rows Here if Scytale: "/>
 </LinearLayout>
