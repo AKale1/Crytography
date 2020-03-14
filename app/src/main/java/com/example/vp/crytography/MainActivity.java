@@ -178,6 +178,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         String output = "";
         input = input.toUpperCase();
+        input = input.replaceAll("[^a-zA-Z0-9_-]", ""); //removes special characters
+        input = input.replaceAll("\\s+", ""); //removes spaces
+        input = input.replaceAll("[0-9]+", ""); //removes numbers
         key = key.toUpperCase();
         int j = 0;
 
@@ -206,6 +209,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public String skytaleEncrypt(String input, int numRows) {
         String output = "";
+        input = input.toUpperCase();
+        input = input.replaceAll("[^a-zA-Z0-9_-]", ""); //removes special characters
+        input = input.replaceAll("\\s+", ""); //removes spaces
+        input = input.replaceAll("[0-9]+", ""); //removes numbers
         int numColumns;
         numColumns = Math.round((input.length()/numRows) + 1);
         int numFilled = numRows - ((numRows * numColumns) - input.length());
@@ -276,6 +283,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public String vigenereDecrypt(String input, String key) {
         String output = "";
         input = input.toUpperCase();
+        input = input.replaceAll("[^a-zA-Z0-9_-]", ""); //removes special characters
+        input = input.replaceAll("\\s+", ""); //removes spaces
+        input = input.replaceAll("[0-9]+", ""); //removes numbers
         key = key.toUpperCase();
         int j = 0;
 
@@ -303,6 +313,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public String skytaleDecrypt(String input, int numRows) {
         String output = "";
+        input = input.toUpperCase();
+        input = input.replaceAll("[^a-zA-Z0-9_-]", ""); //removes special characters
+        input = input.replaceAll("\\s+", ""); //removes spaces
+        input = input.replaceAll("[0-9]+", ""); //removes numbers
         int numColumns;
         numColumns = Math.round((input.length()/numRows) + 1);
         int numFilled = numRows - ((numRows * numColumns) - input.length());
