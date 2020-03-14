@@ -75,21 +75,22 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:hint="Enter Key Here if Vigenre: "/>
+        android:hint="Enter Key if Vigenere"/>
 
     <EditText
         android:id="@+id/shift"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="text"
-        android:hint="Enter Shift Here if Caesar: "/>
+        android:inputType="number"
+        android:hint="Enter shift if Caesar"/>
 
     <EditText
-        android:id="@+id/scytaleRows"
+        android:id="@+id/rows"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="text"
-        android:hint="Enter The Number of Rows Here if Scytale: "/>
+        android:inputType="number"
+        android:hint="Enter rows if Scytale"/>
+
 </LinearLayout>
