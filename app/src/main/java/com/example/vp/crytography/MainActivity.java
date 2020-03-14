@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         decrypt = (Button) this.findViewById(R.id.decrypt);
         encrypt.setOnClickListener(this);
         decrypt.setOnClickListener(this);
+        encryptedTV = (TextView)this.findViewById(R.id.encrypted);
+        decryptedTV = (TextView)this.findViewById(R.id.decrypted);
 
     }
 
@@ -47,25 +49,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.scytale:
                 if (checked) {
                     scytale = true;
-
-                } else {
-                    scytale = false;
+                    vigenere = false;
+                    caesar = false;
                 }
                 break;
 
             case R.id.vigenere:
                 if (checked) {
                     vigenere = true;
-                } else {
-                    vigenere = false;
+                    scytale = false;
+                    caesar = false;
                 }
                 break;
 
             case R.id.caesar:
                 if (checked) {
                     caesar = true;
-                } else {
-                    caesar = false;
+                    vigenere =false;
+                    scytale = false;
                 }
                 break;
         }
@@ -76,50 +77,67 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (v.equals(encrypt)) {
             if(caesar) {
+                input = "";
+                answer = "";
                 EditText message = (EditText) findViewById(R.id.message);
                 input = message.getText().toString();
                 EditText eShift = (EditText)findViewById(R.id.shift);
                 shift = Integer.parseInt(eShift.getText().toString());
                 answer = caesarEncrypt(input, shift);
-                Toast.makeText(this, answer, Toast.LENGTH_SHORT).show();
-                //encryptedTV.setText("Encryped: " + answer);
+                encryptedTV.setText("Encrypted: " + answer);
+                decryptedTV.setText("Decrypted: " + input);
             }else if(vigenere){
+                input = "";
+                answer = "";
                 EditText message = (EditText) findViewById(R.id.message);
                 input = message.getText().toString();
                 EditText eKey = (EditText)findViewById(R.id.key);
                 key = eKey.getText().toString();
                 answer = vigenereEncrypt(input, key);
-                Toast.makeText(this, answer, Toast.LENGTH_SHORT).show();
+                encryptedTV.setText("Encrypted: " + answer);
+                decryptedTV.setText("Decrypted: " + input);
             }else{
+                input = "";
+                answer = "";
                 EditText message = (EditText) findViewById(R.id.message);
                 input = message.getText().toString();
                 EditText eRows = (EditText)findViewById(R.id.rows);
                 rows = Integer.parseInt(eRows.getText().toString());
                 answer = skytaleEncrypt(input, rows);
-                Toast.makeText(this, answer, Toast.LENGTH_SHORT).show();
+                encryptedTV.setText("Encrypted: " + answer);
+                decryptedTV.setText("Decrypted: " + input);
             }
         }else{
             if(caesar){
+                input = "";
+                answer = "";
                 EditText message = (EditText) findViewById(R.id.message);
                 input = message.getText().toString();
                 EditText eShift = (EditText)findViewById(R.id.shift);
                 shift = Integer.parseInt(eShift.getText().toString());
                 answer = caesarDecrypt(input, shift);
-                Toast.makeText(this, answer, Toast.LENGTH_SHORT).show();
+                decryptedTV.setText("Decrypted: " + answer);
+                encryptedTV.setText("Encrypted: " + input);
             }else if(vigenere){
+                input = "";
+                answer = "";
                 EditText message = (EditText) findViewById(R.id.message);
                 input = message.getText().toString();
                 EditText eKey = (EditText)findViewById(R.id.key);
                 key = eKey.getText().toString();
                 answer = vigenereDecrypt(input, key);
-                Toast.makeText(this, answer, Toast.LENGTH_SHORT).show();
+                decryptedTV.setText("Decrypted: " + answer);
+                encryptedTV.setText("Encrypted: " + input);
             }else{
+                input = "";
+                answer = "";
                 EditText message = (EditText) findViewById(R.id.message);
                 input = message.getText().toString();
                 EditText eRows = (EditText)findViewById(R.id.rows);
                 rows = Integer.parseInt(eRows.getText().toString());
                 answer = skytaleDecrypt(input, rows);
-                Toast.makeText(this, answer, Toast.LENGTH_SHORT).show();
+                decryptedTV.setText("Decrypted: " + answer);
+                encryptedTV.setText("Encrypted: " + input);
             }
         }
 
