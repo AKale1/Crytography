@@ -31,8 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        EditText message = (EditText) findViewById(R.id.message);
-        input = message.getText().toString();
+
         encrypt = (Button) this.findViewById(R.id.encrypt);
         decrypt = (Button) this.findViewById(R.id.decrypt);
         encrypt.setOnClickListener(this);
@@ -77,23 +76,257 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if (v.equals(encrypt)) {
             if(caesar) {
+                EditText message = (EditText) findViewById(R.id.message);
+                input = message.getText().toString();
                 EditText eShift = (EditText)findViewById(R.id.shift);
                 shift = Integer.parseInt(eShift.getText().toString());
                 answer = caesarEncrypt(input, shift);
-                encryptedTV.setText("Encryped: " + answer);
+                Toast.makeText(this, answer, Toast.LENGTH_SHORT).show();
+                //encryptedTV.setText("Encryped: " + answer);
+            }else if(vigenere){
+                EditText message = (EditText) findViewById(R.id.message);
+                input = message.getText().toString();
+                EditText eKey = (EditText)findViewById(R.id.key);
+                key = eKey.getText().toString();
+                answer = vigenereEncrypt(input, key);
+                Toast.makeText(this, answer, Toast.LENGTH_SHORT).show();
+            }else{
+                EditText message = (EditText) findViewById(R.id.message);
+                input = message.getText().toString();
+                EditText eRows = (EditText)findViewById(R.id.rows);
+                rows = Integer.parseInt(eRows.getText().toString());
+                answer = skytaleEncrypt(input, rows);
+                Toast.makeText(this, answer, Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            if(caesar){
+                EditText message = (EditText) findViewById(R.id.message);
+                input = message.getText().toString();
+                EditText eShift = (EditText)findViewById(R.id.shift);
+                shift = Integer.parseInt(eShift.getText().toString());
+                answer = caesarDecrypt(input, shift);
+                Toast.makeText(this, answer, Toast.LENGTH_SHORT).show();
+            }else if(vigenere){
+                EditText message = (EditText) findViewById(R.id.message);
+                input = message.getText().toString();
+                EditText eKey = (EditText)findViewById(R.id.key);
+                key = eKey.getText().toString();
+                answer = vigenereDecrypt(input, key);
+                Toast.makeText(this, answer, Toast.LENGTH_SHORT).show();
+            }else{
+                EditText message = (EditText) findViewById(R.id.message);
+                input = message.getText().toString();
+                EditText eRows = (EditText)findViewById(R.id.rows);
+                rows = Integer.parseInt(eRows.getText().toString());
+                answer = skytaleDecrypt(input, rows);
+                Toast.makeText(this, answer, Toast.LENGTH_SHORT).show();
             }
         }
 
     }
 
-
-    public String caesarEncrypt(String input, int shift){
+    public String caesarEncrypt(String input, int shift)
+    {
         String output = "";
+        input = input.toUpperCase();
+        input = input.replaceAll("[^a-zA-Z0-9_-]", ""); //removes special characters
+        input = input.replaceAll("\\s+", ""); //removes spaces
+        input = input.replaceAll("[0-9]+", ""); //removes numbers
 
-        return input;
+        while(shift > 26) {
+            shift = shift - 26;
+        }
+
+        for(int i = 0; i <= input.length() - 1; i++)
+        {
+            if(input.charAt(i) + shift > 90)
+            {
+
+                output += (char)((input.charAt(i) + shift) - 26);
+
+            }else
+            {
+
+                output += (char)(input.charAt(i)+shift);
+
+            }
+        }
+
+        output = output.toUpperCase();
+        return output;
     }
 
+    public String vigenereEncrypt(String input, String key)
+    {
+        String output = "";
+        input = input.toUpperCase();
+        key = key.toUpperCase();
+        int j = 0;
 
+        for(int i = 0; i <= input.length() - 1; i++)
+        {
+            if(j == key.length())
+            {
+                j = 0;
+            }
+
+            if((input.charAt(i) + (key.charAt(j) - 65)) > 90){
+                int num = (input.charAt(i) + (key.charAt(j) - 65) - 26);
+                output += (char)(num);
+            }else {
+
+                output += (char)(input.charAt(i) + (key.charAt(j) - 65));
+            }
+            j++;
+
+        }
+
+        output = output.toUpperCase();
+        return output;
+
+    }
+
+    public String skytaleEncrypt(String input, int numRows) {
+        String output = "";
+        int numColumns;
+        numColumns = Math.round((input.length()/numRows) + 1);
+        int numFilled = numRows - ((numRows * numColumns) - input.length());
+        int strI = 0;
+
+        char[][] decodeCylinder = new char[numRows][numColumns];
+
+        for(int i = 0; i < decodeCylinder.length; i++)
+        {
+            for (int j = 0; j < decodeCylinder[0].length; j++)
+            {
+                if(j == numColumns - 1 && numFilled <= 0 || strI >= input.length()) {
+                    decodeCylinder[i][j] = '@';
+                }else
+                {
+                    decodeCylinder[i][j] = input.charAt(strI);
+                    strI++;
+                }
+            }
+            numFilled--;
+        }
+
+        for (int i = 0; i < decodeCylinder[0].length; i++) {
+            for (int j = 0; j < decodeCylinder.length; j++) {
+                if(decodeCylinder[j][i] != '@') {
+                    output += decodeCylinder[j][i];
+                }
+            }
+        }
+
+//		System.out.println(numColumns);
+        output = output.toUpperCase();
+        return output;
+    }
+
+    public String caesarDecrypt(String input, int shift)
+    {
+        String output = "";
+        input = input.toUpperCase();
+        input = input.replaceAll("[^a-zA-Z0-9_-]", ""); //removes special characters
+        input = input.replaceAll("\\s+", ""); //removes spaces
+        input = input.replaceAll("[0-9]+", ""); //removes numbers
+
+        while(shift > 26) {
+            shift = shift - 26;
+        }
+
+        for(int i = 0; i <= input.length() - 1; i++)
+        {
+            if(input.charAt(i) - shift < 65)
+            {
+
+                output += (char)((input.charAt(i) - shift) + 26);
+
+            }else
+            {
+
+                output += (char)(input.charAt(i) - shift);
+
+            }
+        }
+
+        output = output.toUpperCase();
+        return output;
+
+    }
+
+    public String vigenereDecrypt(String input, String key) {
+        String output = "";
+        input = input.toUpperCase();
+        key = key.toUpperCase();
+        int j = 0;
+
+        for(int i = 0; i <= input.length() - 1; i++)
+        {
+            if(j == key.length())
+            {
+                j = 0;
+            }
+
+            if((input.charAt(i) - (key.charAt(j) - 65)) < 65){
+                int num = (input.charAt(i) - (key.charAt(j) - 65) + 26);
+                output += (char)(num);
+            }else {
+
+                output += (char)(input.charAt(i) - (key.charAt(j) - 65));
+            }
+            j++;
+
+        }
+
+        output = output.toUpperCase();
+        return output;
+    }
+
+    public String skytaleDecrypt(String input, int numRows) {
+        String output = "";
+        int numColumns;
+        numColumns = Math.round((input.length()/numRows) + 1);
+        int numFilled = numRows - ((numRows * numColumns) - input.length());
+        int strI = 0;
+
+        String ps = "";
+
+        for (int i = 0; i < numRows * numColumns; i++) {
+            if(strI >= input.length()) {
+                ps += '@';
+            }else {
+                ps += input.charAt(strI);
+                strI++;
+            }
+        }
+
+        strI = 0;
+
+        char[][] decodeCylinder = new char[numRows][numColumns];
+
+        for(int i = 0; i < decodeCylinder[0].length; i++)
+        {
+            for (int j = 0; j < decodeCylinder.length; j++)
+            {
+                decodeCylinder[j][i] = ps.charAt(strI);
+                strI++;
+            }
+
+        }
+
+        for (int i = 0; i < decodeCylinder.length; i++) {
+            for (int j = 0; j < decodeCylinder[0].length; j++) {
+                if(decodeCylinder[i][j] != '@') {
+                    output += decodeCylinder[i][j];
+                }
+            }
+        }
+
+//		System.out.println(numColumns);
+        output = output.toUpperCase();
+        return output;
+    }
 
 
 }
