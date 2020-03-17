@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //buttons
     Button encrypt;
     Button decrypt;
     TextView encryptedTV;
